@@ -1,0 +1,20 @@
+.task {
+  background: #f4f4f4;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+.task:hover {
+  box-shadow: 1px 1px 2px 3px #7e6f6f;
+}
+
+.task.reminder {
+  border: 5px solid green;
+}
+
+.task h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
