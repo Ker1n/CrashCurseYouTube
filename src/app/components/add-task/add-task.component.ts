@@ -1,0 +1,46 @@
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {UiService} from "../../services/ui.service";
+import { Task } from '../../Interfaces/Task';
+import {Subscription} from "rxjs";
+
+
+@Component({
+  selector: 'app-add-task',
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.css']
+})
+export class AddTaskComponent implements OnInit {
+  @Output() onAddTask: EventEmitter<Task> = new EventEmitter<Task>();
+  text: string;
+  day: string;
+  reminder: boolean = false;
+  showAddTask: boolean;
+  private subscription: Subscription;
+
+  constructor(private UiService: UiService) {
+    this.subscription = this.UiService.onToggle()
+      .subscribe(value => this.showAddTask = value);
+  }
+
+  ngOnInit(): void {
+  }
+
+  onSubmit() {
+    if (!this.text) {
+      alert('please add a task!');
+      return;
+    }
+    const newTask:Task = {
+      text: this.text,
+      day: this.day,
+      reminder: this.reminder,
+      id: Date.now()
+    }
+
+    this.onAddTask.emit(newTask);
+
+    this.text = '';
+    this.day = '';
+    this.reminder = false;
+  }
+}
